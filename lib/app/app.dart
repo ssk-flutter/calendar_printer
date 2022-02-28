@@ -6,7 +6,20 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    var textTheme = Theme.of(context).textTheme;
     return MaterialApp(
+      theme: theme.copyWith(
+        textTheme: textTheme.copyWith(
+          headline2: textTheme.headline2?.copyWith(
+            color: Colors.black,
+            fontSize: textTheme.headline2!.fontSize! * 1.2,
+          ),
+          headline6: textTheme.headline6?.copyWith(
+            color: Colors.black,
+          ),
+        ),
+      ),
       home: HomePage(),
     );
   }
