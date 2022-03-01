@@ -18,7 +18,7 @@ class CalendarBodyWidget extends StatelessWidget {
       itemCount: days.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 7,
-        childAspectRatio: 3 / 4,
+        childAspectRatio: 1 / 1,
       ),
       itemBuilder: (context, index) {
         final DateTime date = days[index];
