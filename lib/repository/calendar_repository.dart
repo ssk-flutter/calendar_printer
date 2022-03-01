@@ -9,29 +9,26 @@ class CalendarRepository {
     );
 
     return List.generate(
-      _getCountOfWeek(year, month, beginDateOfWeek),
+      _getNumberOfWeek(year, month, beginDateOfWeek),
       (week) => _generateWeek(beginDateOfWeek, week),
     );
   }
 
-  int _getCountOfWeek(int year, int month, DateTime beginDateOfWeek) {
+  int _getNumberOfWeek(int year, int month, DateTime beginDateOfWeek) {
     final firstDateOfNextMonth = DateTime(year, month + 1, 1);
 
-    final numberOfWeek = ((firstDateOfNextMonth.millisecondsSinceEpoch -
-                        beginDateOfWeek.millisecondsSinceEpoch) /
-                    (24 * 60 * 60 * 1000) +
-                6)
-            .toInt() ~/
-        7;
-    return numberOfWeek;
+    final durationOfCalendarVisible =
+        firstDateOfNextMonth.millisecondsSinceEpoch -
+            beginDateOfWeek.millisecondsSinceEpoch;
+    final aDay = Duration(days: 1).inMilliseconds;
+    final result = ((durationOfCalendarVisible / aDay) + 6).toInt() ~/ 7;
+    return result;
   }
 
   List<DateTime> _generateWeek(DateTime beginDateOfWeek, int week) {
     return List.generate(
       7,
-      (day) => beginDateOfWeek.add(
-        Duration(days: week * 7 + day),
-      ),
+      (day) => beginDateOfWeek.add(Duration(days: week * 7 + day)),
     );
   }
 }
