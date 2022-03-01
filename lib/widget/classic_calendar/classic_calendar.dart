@@ -13,7 +13,7 @@ class ClassicCalendar extends StatelessWidget {
       children: [
         HeaderWidget(),
         ColumnHeaderWidget(),
-        SizedBox(height: 500, child: CalendarBodyWidget()),
+        SizedBox(height: 350, child: CalendarBodyWidget()),
       ],
     );
   }
