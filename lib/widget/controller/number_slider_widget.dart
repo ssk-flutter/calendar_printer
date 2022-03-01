@@ -31,8 +31,8 @@ class NumberSliderWidget extends StatelessWidget {
         options: CarouselOptions(
           scrollDirection: Axis.vertical,
           height: kNumberWidgetHeight,
-          aspectRatio: 1 / 1,
-          viewportFraction: 0.65,
+          aspectRatio: kNumberWidgetWidth / kNumberWidgetHeight,
+          viewportFraction: 0.55,
           initialPage: initialPage,
           autoPlay: false,
           enableInfiniteScroll: true,
