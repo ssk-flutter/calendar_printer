@@ -2,12 +2,19 @@ import 'package:calendar_printer/repository/calendar_repository.dart';
 import 'package:flutter/material.dart';
 
 class CalendarBodyWidget extends StatelessWidget {
-  CalendarBodyWidget({Key? key}) : super(key: key);
+  CalendarBodyWidget({
+    Key? key,
+    required this.year,
+    required this.month,
+  }) : super(key: key);
 
-  final List days = CalendarRepository()
+  final int year;
+  final int month;
+
+  late final List days = CalendarRepository()
       .getCalendarWeeks(
-        year: DateTime.now().year,
-        month: DateTime.now().month,
+        year: year,
+        month: month,
       )
       .expand((element) => element)
       .toList();

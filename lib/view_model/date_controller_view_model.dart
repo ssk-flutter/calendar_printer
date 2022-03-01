@@ -31,11 +31,17 @@ class DateControllerViewModel with ChangeNotifier {
     year = int.parse(yearArray.map((e) => e.toString()).join(''));
   }
 
-  void onChangeMonth(int month) {}
+  void reset() {
+    year = DateTime.now().year;
+    month = DateTime.now().month;
+  }
 
-  void onChangeYearNumber(int index, int number) {
-    final result = yearArray..[index] = number;
+  void onChangeYearNumber(int index, int value) {
+    final result = yearArray..[index] = value;
     yearArray = result;
-    print('year $year');
+  }
+
+  void onChangeMonth(int value) {
+    month = value;
   }
 }

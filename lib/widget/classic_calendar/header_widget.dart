@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 class HeaderWidget extends StatelessWidget {
   const HeaderWidget({
     Key? key,
+    required this.year,
+    required this.month,
   }) : super(key: key);
+
+  final int year;
+  final int month;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +18,7 @@ class HeaderWidget extends StatelessWidget {
         Container(
           padding: EdgeInsets.zero,
           child: Text(
-            '03',
+            month.toString(),
             style: Theme.of(context).textTheme.headline2,
             textAlign: TextAlign.end,
           ),
@@ -23,11 +28,11 @@ class HeaderWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '2022',
+              year.toString(),
               style: Theme.of(context).textTheme.headline6,
             ),
             Text(
-              '삼월',
+              monthToText(month),
               style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -36,5 +41,22 @@ class HeaderWidget extends StatelessWidget {
         )
       ],
     );
+  }
+
+  String monthToText(int month) {
+    return [
+      '일월',
+      '이월',
+      '삼월',
+      '사월',
+      '오월',
+      '유월',
+      '칠월',
+      '팔월',
+      '구월',
+      '시월',
+      '십일월',
+      '십이월',
+    ][month - 1];
   }
 }
