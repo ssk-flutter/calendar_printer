@@ -26,18 +26,18 @@ class NumberSliderWidget extends StatelessWidget {
       height: kNumberWidgetHeight,
       alignment: Alignment.centerRight,
       child: CarouselSlider(
-        items: List.generate(count, (index) {
-          return NumberWidget(index + startingNumber);
-        }),
+        items: List.generate(
+            count, (index) => NumberWidget(index + startingNumber)),
         options: CarouselOptions(
           scrollDirection: Axis.vertical,
           height: kNumberWidgetHeight,
           aspectRatio: 1 / 1,
-          viewportFraction: 0.8,
+          viewportFraction: 0.65,
           initialPage: initialPage,
           autoPlay: false,
           enableInfiniteScroll: true,
           pageSnapping: true,
+          reverse: true,
           onPageChanged: (page, reason) => onPageChanged(page),
         ),
         carouselController: controller,

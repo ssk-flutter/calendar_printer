@@ -1,2 +1,2 @@
-const double kNumberWidgetWidth = 20;
-const double kNumberWidgetHeight = 20;
+const double kNumberWidgetWidth = 30;
+const double kNumberWidgetHeight = 40;

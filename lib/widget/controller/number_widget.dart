@@ -13,6 +13,7 @@ class NumberWidget extends StatelessWidget {
     return Text(
       '$number',
       textAlign: TextAlign.center,
+      style: Theme.of(context).textTheme.headline5,
     );
   }
 }

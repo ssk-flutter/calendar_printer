@@ -29,7 +29,7 @@ class CalendarBodyWidget extends StatelessWidget {
       ),
       itemBuilder: (context, index) {
         final DateTime date = days[index];
-        return DateWidget(date: date);
+        return DateWidget(date: date, isMain: date.month == month);
       },
     );
   }
@@ -39,9 +39,11 @@ class DateWidget extends StatelessWidget {
   const DateWidget({
     Key? key,
     required this.date,
+    required this.isMain,
   }) : super(key: key);
 
   final DateTime date;
+  final bool isMain;
 
   bool get isHolyDay => false;
 
@@ -65,7 +67,7 @@ class DateWidget extends StatelessWidget {
       ?.copyWith(color: color, fontSize: 30);
 
   Color get color {
-    if (date.month != DateTime.now().month) {
+    if (!isMain) {
       return Colors.grey;
     }
 
