@@ -47,24 +47,60 @@ void main() {
     assert(ListEquality().equals(expected, actual),
         'expected: [$expected] but actual: [$actual]');
   });
+
+  test('last week of 2022-02', () async {
+    final repository = CalendarRepository();
+
+    final expected = ['2022-02-27', '2022-02-28', '2022-03-01', '2022-03-02'];
+
+    final lastWeek = repository.getCalendarWeeks(year: 2022, month: 2).last;
+    final actual = lastWeek
+        .take(4)
+        .map((e) => DateFormat("yyyy-MM-dd").format(e))
+        .toList();
+
+    assert(ListEquality().equals(expected, actual),
+        'expected: [$expected] but actual: [$actual]');
+  });
 }
 
 class CalendarRepository {
   List<List<DateTime>> getCalendarWeeks(
       {required int year, required int month}) {
+    List<DateTime> firstWeek = getFirstWeek(year, month);
+    List<DateTime> lastWeek = getLastWeek(year, month);
+    return [
+      firstWeek,
+      lastWeek,
+    ];
+  }
+
+  List<DateTime> getFirstWeek(int year, int month) {
     final beginDay = DateTime(year, month, 1);
     // monday/1 to sunday/7
     final beforeDays = beginDay.weekday;
 
-    final firstWeek = List.generate(beforeDays,
+    final week = List.generate(beforeDays,
             (index) => beginDay.subtract(Duration(days: beforeDays - index))) +
         List.generate(
             DateTime.sunday - beginDay.weekday,
             (index) => beginDay.add(
                   Duration(days: index),
                 ));
-    return [
-      firstWeek,
-    ];
+    return week;
+  }
+
+  List<DateTime> getLastWeek(int year, int month) {
+    final endDay = DateTime(year, month + 1, 0);
+    final beforeDays = endDay.weekday;
+
+    final week = List.generate(beforeDays,
+            (index) => endDay.subtract(Duration(days: beforeDays - index))) +
+        List.generate(
+            DateTime.sunday - endDay.weekday,
+            (index) => endDay.add(
+                  Duration(days: index),
+                ));
+    return week;
   }
 }
