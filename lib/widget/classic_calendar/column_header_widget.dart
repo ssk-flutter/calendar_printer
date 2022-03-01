@@ -8,10 +8,10 @@ class ColumnHeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          border: Border.all(
-        color: Colors.black,
-      )),
+      // decoration: BoxDecoration(
+      //     border: Border.all(
+      //   color: Colors.black,
+      // )),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -19,9 +19,7 @@ class ColumnHeaderWidget extends StatelessWidget {
             .map((e) => Expanded(
                   child: Container(
                     decoration: BoxDecoration(
-                        border: Border.all(
-                      color: Colors.black,
-                    )),
+                        border: Border.all(color: Colors.black, width: 0.5)),
                     child: Text(
                       e,
                       style: Theme.of(context)
