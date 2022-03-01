@@ -1,3 +1,4 @@
+import 'package:calendar_printer/repository/calendar_repository.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
@@ -33,16 +34,31 @@ void main() {
         'expected: [$expected] but actual: [$actual]');
   });
 
+  test('last week of 2021-12', () async {
+    final repository = CalendarRepository();
+
+    final expected =
+        '2021-12-26, 2021-12-27, 2021-12-28, 2021-12-29, 2021-12-30, 2021-12-31, 2022-01-01'
+            .split(', ');
+
+    final lastWeek = repository.getCalendarWeeks(year: 2021, month: 12).last;
+    final actual =
+        lastWeek.map((e) => DateFormat("yyyy-MM-dd").format(e)).toList();
+
+    assert(ListEquality().equals(expected, actual),
+        'expected: [$expected] but actual: [$actual]');
+  });
+
   test('first week of 2022-01', () async {
     final repository = CalendarRepository();
 
-    final expected = ['2021-12-30', '2021-12-31', '2022-01-01'];
+    final expected =
+        '2021-12-26, 2021-12-27, 2021-12-28, 2021-12-29, 2021-12-30, 2021-12-31, 2022-01-01'
+            .split(', ');
 
     final firstWeek = repository.getCalendarWeeks(year: 2022, month: 1).first;
-    final actual = firstWeek
-        .sublist(4)
-        .map((e) => DateFormat("yyyy-MM-dd").format(e))
-        .toList();
+    final actual =
+        firstWeek.map((e) => DateFormat("yyyy-MM-dd").format(e)).toList();
 
     assert(ListEquality().equals(expected, actual),
         'expected: [$expected] but actual: [$actual]');
@@ -62,42 +78,4 @@ void main() {
     assert(ListEquality().equals(expected, actual),
         'expected: [$expected] but actual: [$actual]');
   });
-}
-
-class CalendarRepository {
-  List<List<DateTime>> getCalendarWeeks(
-      {required int year, required int month}) {
-    final firstDateOfMonth = DateTime(year, month, 1);
-    final beginDateOfWeek = firstDateOfMonth.subtract(
-      Duration(
-        days: firstDateOfMonth.weekday % DateTime.sunday,
-      ),
-    );
-
-    return List.generate(
-      getCountOfWeek(year, month, beginDateOfWeek),
-      (week) => generateWeek(beginDateOfWeek, week),
-    );
-  }
-
-  int getCountOfWeek(int year, int month, DateTime beginDateOfWeek) {
-    final firstDateOfNextMonth = DateTime(year, month + 1, 1);
-
-    final numberOfWeek = ((firstDateOfNextMonth.millisecondsSinceEpoch -
-                        beginDateOfWeek.millisecondsSinceEpoch) /
-                    (24 * 60 * 60 * 1000) +
-                6)
-            .toInt() ~/
-        7;
-    return numberOfWeek;
-  }
-
-  List<DateTime> generateWeek(DateTime beginDateOfWeek, int week) {
-    return List.generate(
-      7,
-      (day) => beginDateOfWeek.add(
-        Duration(days: week * 7 + day),
-      ),
-    );
-  }
 }
