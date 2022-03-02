@@ -21,7 +21,9 @@ class CalendarViewModel with ChangeNotifier {
 
     await Printing.layoutPdf(
       usePrinterSettings: true,
-      format: PdfPageFormat.standard.landscape,
+      // dynamicLayout: false,
+      // format: PdfPageFormat.standard.landscape,
+      format: PdfPageFormat.standard,
       onLayout: (format) => _document
           .createNew(
             bytes: bytes,
@@ -51,14 +53,10 @@ class CalendarViewModel with ChangeNotifier {
   Widget buildPreviewWidgetForCapture(BuildContext context) {
     final dateController = context.read<DateControllerViewModel>();
     return Material(
-      child: SizedBox(
-        width: 1000.0,
-        height: 550.0,
-        child: ClassicCalendar(
-          year: dateController.year,
-          month: dateController.month,
-          size: Size(1000, 550),
-        ),
+      child: ClassicCalendar(
+        year: dateController.year,
+        month: dateController.month,
+        size: Size(1000, 550),
       ),
     );
   }
