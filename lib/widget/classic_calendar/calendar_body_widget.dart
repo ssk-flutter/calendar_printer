@@ -23,7 +23,6 @@ class CalendarBodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('size: $size');
     var crossAxisCount = 7;
     var maxRows = 6;
     return GridView.count(

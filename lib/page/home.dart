@@ -22,27 +22,57 @@ class HomePage extends StatelessWidget {
           ),
         ],
         builder: (context, _) {
+          var isPortrait = MediaQuery.of(context).size.aspectRatio <= 1.0;
           return Scaffold(
             body: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    ClassicCalendar(
-                      year: context.watch<DateControllerViewModel>().year,
-                      month: context.watch<DateControllerViewModel>().month,
-                      size:
-                          Size.square(MediaQuery.of(context).size.shortestSide),
-                    ),
-                    Spacer(),
-                    DateControllerWidget(),
-                    Spacer(),
-                    ToolbarWidget(),
-                  ],
-                ),
+                child: isPortrait
+                    ? buildPortrait(context)
+                    : buildLandscape(context),
               ),
             ),
           );
         });
+  }
+
+  Widget buildPortrait(BuildContext context) {
+    return Column(
+      children: [
+        buildClassicCalendar(context),
+        Spacer(),
+        DateControllerWidget(),
+        Spacer(),
+        ToolbarWidget(),
+      ],
+    );
+  }
+
+  ClassicCalendar buildClassicCalendar(BuildContext context) {
+    return ClassicCalendar(
+      year: context.watch<DateControllerViewModel>().year,
+      month: context.watch<DateControllerViewModel>().month,
+      size: Size.square(MediaQuery.of(context).size.shortestSide),
+    );
+  }
+
+  Widget buildLandscape(BuildContext context) {
+    return Row(
+      children: [
+        Spacer(),
+        buildClassicCalendar(context),
+        Spacer(),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Spacer(),
+            DateControllerWidget(),
+            Spacer(),
+            ToolbarWidget(),
+          ],
+        ),
+        Spacer(),
+      ],
+    );
   }
 }
