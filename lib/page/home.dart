@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../view_model/date_controller_view_model.dart';
 import '../widget/classic_calendar/classic_calendar.dart';
 import '../widget/controller/date_controller_widget.dart';
-import '../widget/toolbar_widget.dart';
+import '../widget/toolbar/toolbar_widget.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
