@@ -31,6 +31,8 @@ class HomePage extends StatelessWidget {
                     ClassicCalendar(
                       year: context.watch<DateControllerViewModel>().year,
                       month: context.watch<DateControllerViewModel>().month,
+                      size:
+                          Size.square(MediaQuery.of(context).size.shortestSide),
                     ),
                     Spacer(),
                     DateControllerWidget(),

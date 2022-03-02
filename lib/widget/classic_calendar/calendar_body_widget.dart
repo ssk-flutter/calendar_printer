@@ -6,10 +6,12 @@ class CalendarBodyWidget extends StatelessWidget {
     Key? key,
     required this.year,
     required this.month,
+    required this.size,
   }) : super(key: key);
 
   final int year;
   final int month;
+  final Size size;
 
   late final List days = CalendarRepository()
       .getCalendarWeeks(
@@ -21,16 +23,16 @@ class CalendarBodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      itemCount: days.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 7,
-        childAspectRatio: 1 / 1,
-      ),
-      itemBuilder: (context, index) {
-        final DateTime date = days[index];
-        return DateWidget(date: date, isMain: date.month == month);
-      },
+    print('size: $size');
+    var crossAxisCount = 7;
+    var maxRows = 6;
+    return GridView.count(
+      physics: NeverScrollableScrollPhysics(),
+      crossAxisCount: crossAxisCount,
+      children: days
+          .map((date) => DateWidget(date: date, isMain: date.month == month))
+          .toList(growable: false),
+      childAspectRatio: size.aspectRatio * maxRows / crossAxisCount,
     );
   }
 }

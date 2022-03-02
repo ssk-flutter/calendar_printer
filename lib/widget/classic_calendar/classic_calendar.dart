@@ -9,24 +9,31 @@ class ClassicCalendar extends StatelessWidget {
     Key? key,
     required this.year,
     required this.month,
+    required this.size,
   }) : super(key: key);
 
   final int year;
   final int month;
+  final Size size;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        HeaderWidget(year: year, month: month),
-        ColumnHeaderWidget(),
-        SizedBox(
-            height: 350,
-            child: CalendarBodyWidget(
+    return SizedBox.fromSize(
+      size: size,
+      child: Column(
+        children: [
+          HeaderWidget(year: year, month: month),
+          ColumnHeaderWidget(),
+          Expanded(
+              child: LayoutBuilder(
+            builder: (context, constraints) => CalendarBodyWidget(
               year: year,
               month: month,
-            )),
-      ],
+              size: Size(constraints.maxWidth, constraints.maxHeight),
+            ),
+          )),
+        ],
+      ),
     );
   }
 }
