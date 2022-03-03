@@ -25,6 +25,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = file('keystore/key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+} else keystoreProperties['storeFile'] = 'prevent-error-for-not-exists-key.properties'
+
 android {
     compileSdkVersion 32
 
@@ -50,11 +56,28 @@ android {
         versionName flutterVersionName
     }
 
-    buildTypes {
+    signingConfigs {
+        debug {
+            // login 테스트를 위해, 고정된 debug.keystore 를 사용함.
+            storeFile file("keystore/debug.keystore")
+            // SHA1: 3E:7E:41:8F:C1:2C:8C:F8:F2:C7:38:FB:B2:78:1F:7A:00:11:1A:3F
+            // SHA256: 09:25:2A:3A:A5:2A:64:42:A2:4E:6A:C1:10:9A:78:BF:8D:C1:FF:CB:E9:8B:76:5A:F2:8D:A4:0B:27:4E:2F:B2
+        }
+
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
+    buildTypes {
+        debug {
             signingConfig signingConfigs.debug
+        }
+        release {
+            signingConfig signingConfigs.release
         }
     }
 }
