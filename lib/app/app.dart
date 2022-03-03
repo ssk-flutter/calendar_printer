@@ -11,6 +11,7 @@ class App extends StatelessWidget {
     );
     var textTheme = theme.textTheme;
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: theme.copyWith(
         textTheme: textTheme.copyWith(
           headline2: textTheme.headline2?.copyWith(

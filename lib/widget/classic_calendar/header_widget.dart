@@ -44,6 +44,11 @@ class HeaderWidget extends StatelessWidget {
   }
 
   String monthToText(int month) {
+    return 'january february march april may june july august september october november december'
+        .split(' ')
+        .map((e) => e.capitalize())
+        .toList()[month - 1];
+
     return [
       '일월',
       '이월',
@@ -58,5 +63,11 @@ class HeaderWidget extends StatelessWidget {
       '십일월',
       '십이월',
     ][month - 1];
+  }
+}
+
+extension StringExtension on String {
+  String capitalize() {
+    return '${this[0].toUpperCase()}${substring(1).toLowerCase()}';
   }
 }
